@@ -61,8 +61,28 @@ def print_tape(tape):
         current_tape = current_tape + character
     return current_tape
 
+def option_1():
+    pass
+
 #tm1 is the instance of the Turing Machine used in this application
 tm1 = Turing_machine()
+
+print("Welcome to Jose Mata's Turing Machine Simulator Program!\n")
+#This is the main menu which calls the funtions for each respective option. 
+main_answer = 0
+while main_answer != 5:
+    main_answer =  input("Please select one of the following choices:\nEnter '1' to enter your input.\nEnter '2' to step through the Turing Machine's steps.\nEnter '3' to run the Turing Machine's program to completion.\nEnter '4' to reset the Turing Machine.\nEnter '5' to exit this Turing Machine Simulator program.\n")
+    if main_answer == '1':
+        option_1()
+    elif main_answer == '2':
+        pass
+    elif main_answer == '3':
+        pass
+    elif main_answer == '4':
+        pass
+    elif main_answer == '5':
+        print("Exiting the program...\n")
+        break
 
 input_string = input("Type your input string. It can only be '1's, '0's, or '_'s:\n")
 input_valid = check_input_string(input_string, tm1.input_alphabet) #sends the input alphabet of the turing machine as the second parameter 
