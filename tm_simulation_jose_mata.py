@@ -34,10 +34,6 @@ class Turing_machine:
         return state  
 
 
-#The tape will simply be a list. It can be "infinite" since lists in Python are dynamic and can be made larger or smaller as needed.    
-#The current head position can be tracked by following the index of the list
-tape = []
-
 #The "check_input_string" function makes sures that the input entered by the user is only made up of characters in the input_alphabet
 #The input alphabet is initiated in the instance of the turing machine and must be sent in as the "input_alphabet" parameter of this function 
 def check_input_string(input_string, input_alphabet):
@@ -49,7 +45,7 @@ def check_input_string(input_string, input_alphabet):
 
 #The "load_tape" function "loads" the input from the user to the tape that will be the input of the Turing Machine
 def load_tape(input_string):
-    tape = []
+    tape = [] #The tape will simply be a list. It can be "infinite" since lists in Python are dynamic and can be made larger or smaller as needed. The current head position can be tracked by following the index of the list
     for character in input_string:
         tape.append(character)
     return tape
@@ -57,38 +53,24 @@ def load_tape(input_string):
 #The "print_tape" function converts the tape list into a string with no spaces in between the characters
 def print_tape(tape):
     current_tape = ""
-    for character  in tape:
+    for character in tape:
         current_tape = current_tape + character
     return current_tape
 
-def option_1():
-    pass
+#The "option_1" function allows the user to write the input to the Turing Machine and checks that it is valid
+def option_1(tm1):
+    input_string = input("Type your input string. It can ONLY be '1's, '0's BUT the final character MUST be an underscore '_':\n")
+    input_valid = check_input_string(input_string, tm1.input_alphabet) #sends the input alphabet of the turing machine as the second parameter 
+    if input_valid == True:
+        tape = load_tape(input_string)
+        print("Input is valid and was succesfully written to the tape.\n")
+        return tape
+    else:
+        print("Error. Tape CANNOT contain a character not from the input alphabet.\n")
+        return [] #This line is included for options 2 and 3 to not work if the input was invalid.
 
-#tm1 is the instance of the Turing Machine used in this application
-tm1 = Turing_machine()
-
-print("Welcome to Jose Mata's Turing Machine Simulator Program!\n")
-#This is the main menu which calls the funtions for each respective option. 
-main_answer = 0
-while main_answer != 5:
-    main_answer =  input("Please select one of the following choices:\nEnter '1' to enter your input.\nEnter '2' to step through the Turing Machine's steps.\nEnter '3' to run the Turing Machine's program to completion.\nEnter '4' to reset the Turing Machine.\nEnter '5' to exit this Turing Machine Simulator program.\n")
-    if main_answer == '1':
-        option_1()
-    elif main_answer == '2':
-        pass
-    elif main_answer == '3':
-        pass
-    elif main_answer == '4':
-        pass
-    elif main_answer == '5':
-        print("Exiting the program...\n")
-        break
-
-input_string = input("Type your input string. It can only be '1's, '0's, or '_'s:\n")
-input_valid = check_input_string(input_string, tm1.input_alphabet) #sends the input alphabet of the turing machine as the second parameter 
-if input_valid == True:
-    tape = load_tape(input_string)
-    #print("The contents of the tape are: " + str(tape))
+#The "option_2_and_3" function allows the user to either step-through the Turing Machine program or run it to full completion.
+def options_2_and_3(tm1, step_through, tape):
     index = 0
     step = 0
     while tm1.current_state != tm1.accept_state:
@@ -97,11 +79,10 @@ if input_valid == True:
         #print info
         print("Step: " + str(step) + "\n")
         print("State: " + tm1.current_state + "\n")
-        current_tape = print_tape(tape)
-        print("Tape: " + current_tape + "\n")
+        print("Tape: " + print_tape(tape) + "\n")
         number_of_spaces = " " * index
         print("Head: " + number_of_spaces + "^\n")
-        print("Next: " + tm1.print_transition_function(tm1.current_state, tape[index]) + "\n\n")
+        print("Next: " + tm1.print_transition_function(tm1.current_state, tape[index]) + "\n")
         #write a '0' unless it is the last character (blank)
         if tm1.write_value == '0': 
             tape[index] = '0'
@@ -112,10 +93,45 @@ if input_valid == True:
             index = index + 1
         #the current state becomes the next state for the while loop to begin again
         tm1.current_state = tm1.next_state
-        enter = input("Press 'Enter' to continue.")
-    print("The output tape is: " + current_tape)
-else:
-    print("Tape CANNOT contain a character not from the input alphabet.\n")
+        if step_through == True:
+            enter = input("Press 'Enter' to continue.\n")
+    print("The output tape is: " + print_tape(tape) + "\n\n")
+
+#tm1 is the instance of the Turing Machine used in this application
+tm1 = Turing_machine()
+
+print("Welcome to Jose Mata's Turing Machine Simulator Program!\n")
+#This is the main menu which calls the funtions for each respective option. 
+main_answer = 0
+tape = []
+while main_answer != 5:
+    main_answer =  input("Please select one of the following choices:\nEnter '1' to enter your input.\nEnter '2' to step through the Turing Machine's steps.\nEnter '3' to run the Turing Machine's program to completion.\nEnter '4' to reset the Turing Machine.\nEnter '5' to exit this Turing Machine Simulator program.\n")
+    if main_answer == '1':
+        tape = option_1(tm1)
+    elif main_answer == '2':
+        if len(tape) == 0:
+            print("You must enter an input first using Option 1.\n")
+        else:
+            print("Performing a step-through of the Turing Machine's program.")
+            options_2_and_3(tm1, True, tape)
+    elif main_answer == '3':
+        if len(tape) == 0:
+            print("You must enter an input first using Option 1.\n")
+        else:
+            print("Running to the Turing Machine program to completion...")
+            options_2_and_3(tm1, False, tape)
+    elif main_answer == '4':
+        tm1 = Turing_machine() #Reset turing machine
+        tape = [] #Reset tape
+        print("Turing Machine has been reset. Choose option 1 to enter a new input.\n")
+    elif main_answer == '5':
+        print("Exiting the program...\n")
+        break
+
+
+
+
+
 
 
 
