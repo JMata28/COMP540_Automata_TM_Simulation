@@ -10,7 +10,7 @@ class Turing_machine:
         self.reject_state = 'R'    
         self.states = [self.initial_state, 'q2', self.accept_state, self.reject_state]
         self.input_alphabet = ['_', '1', '0'] #The '_' represents a blank character 
-        self.tape_alphabet = ['_', '1', '0', 'H'] #The 'H' means that the program has halted, so the H is at the end of the output on the tape
+        self.tape_alphabet = ['_', '1', '0']
         self.current_state = 'q1' #This attribute can change
         self.next_state = 'q1' #This attribute can change
 
@@ -127,6 +127,8 @@ while main_answer != 5:
     elif main_answer == '5':
         print("Exiting the program...\n")
         break
+    else: 
+        print("Answer is invalid.\n")
 
 
 
