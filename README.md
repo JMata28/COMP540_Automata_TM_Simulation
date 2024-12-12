@@ -4,7 +4,7 @@ This is Jose Mata's submission for COMP 540 - Automata "Turing Machine Simulator
 Fall 2024, Bridgewater State University
 
 ## Instructions for Running the Python File
-Run the "CFG_jose_mata.py" file with Python 3.12.2 64-bit
+Run the "tm_simulation_jose_mata.py" file with Python 3.12.2 64-bit
 
 ## What the Program Does
 This program simulates a Turing Machine that accepts inputs consisting of 0s and/or 1s and ending with an underscore "_". The program simulated for the Turing Machine then converts every 1 and 0 into a 0. This simualtion allows for a step-by-step or a complete execution of the processing of the input string, so the user can see the current step, state, tape, head position, and transition function at any point of the process. 
